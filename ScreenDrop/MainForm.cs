@@ -214,7 +214,11 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnMainFormLoad(object sender, EventArgs e)
         {
-            // TODO Add code	
+            // Load settings data to GUI
+            this.SettingsDataToGui();
+
+            // Hack Topmost on start [DEBUG]
+            this.TopMost = this.settingsData.TopMost;
         }
 
         /// <summary>
