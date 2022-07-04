@@ -246,6 +246,27 @@ namespace ScreenDrop
         }
 
         /// <summary>
+        /// Settingses the data to GUI.
+        /// </summary>
+        private void SettingsDataToGui()
+        {
+            // Options
+            this.alwaysOnTopToolStripMenuItem.Checked = this.settingsData.TopMost;
+            this.keepImagesToolStripMenuItem.Checked = this.settingsData.KeepImages;
+
+            // Modifier checkboxes
+            this.controlCheckBox.Checked = this.settingsData.Control;
+            this.altCheckBox.Checked = this.settingsData.Alt;
+            this.shiftCheckBox.Checked = this.settingsData.Shift;
+
+            // Hotkey
+            if (this.settingsData.Hotkey.Length > 0)
+            {
+                this.keyComboBox.SelectedItem = this.settingsData.Hotkey;
+            }
+        }
+
+        /// <summary>
         /// Handles the exit tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
