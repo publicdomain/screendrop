@@ -15,9 +15,14 @@ namespace ScreenDrop
 		[STAThread]
 		private static void Main(string[] args)
 		{
-			Application.EnableVisualStyles();
+			/*Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			Application.Run(new MainForm());*/
+			
+			var ctx = new ApplicationContext();
+            var frmHidden = new HiddenForm(ctx);
+            //pass the application context, not the form
+            Application.Run(ctx);
 		}
 		
 	}

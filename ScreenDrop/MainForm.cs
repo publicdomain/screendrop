@@ -70,7 +70,6 @@ namespace ScreenDrop
 
             // Load settings from disk
             this.settingsData = this.LoadSettingsFile(this.settingsDataPath);
-
         }
 
         /// <summary>
@@ -271,6 +270,31 @@ namespace ScreenDrop
             if (this.settingsData.Hotkey.Length > 0)
             {
                 this.keyComboBox.SelectedItem = this.settingsData.Hotkey;
+            }
+        }
+
+        /// <summary>
+        /// Handles the minimize tool strip menu item click.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnMinimizeToolStripMenuItemClick(object sender, System.EventArgs e)
+        {
+            // TODO Add code
+        }
+
+        /// <summary>
+        /// Handles the hotkey updated event.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        internal void OnHotkeyUpdated(object sender, EventArgs e)
+        {
+            // Only update if there's -at least- a valid key
+            if ((this.keyComboBox.SelectedIndex > -1 && this.keyComboBox.SelectedItem.ToString().ToLowerInvariant() != "none"))
+            {
+                // Update the hotkey combination
+                ((HiddenForm)this.Owner).UpdateHotkey(this.controlCheckBox.Checked, this.altCheckBox.Checked, this.shiftCheckBox.Checked, this.keyComboBox.SelectedItem.ToString());
             }
         }
 

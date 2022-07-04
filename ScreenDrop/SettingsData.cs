@@ -39,26 +39,24 @@ namespace PublicDomain
         /// Gets or sets a value indicating whether this <see cref="T:PublicDomainWeekly.SettingsData"/> is control.
         /// </summary>
         /// <value><c>true</c> if control; otherwise, <c>false</c>.</value>
-        public bool Control { get; set; } = true;
+        public bool Control { get; set; } = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:PublicDomainWeekly.SettingsData"/> is alternate.
         /// </summary>
         /// <value><c>true</c> if alternate; otherwise, <c>false</c>.</value>
-        public bool Alt { get; set; } = false;
+        public bool Alt { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:PublicDomainWeekly.SettingsData"/> is shift.
         /// </summary>
         /// <value><c>true</c> if shift; otherwise, <c>false</c>.</value>
-        public bool Shift { get; set; } = false;
+        public bool Shift { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the hotkey.
         /// </summary>
         /// <value>The hotkey.</value>
-        public string Hotkey { get; set; } = "1";
-
-
+        public string Hotkey { get; set; } = "S";
     }
 }
