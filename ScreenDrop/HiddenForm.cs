@@ -203,7 +203,21 @@ namespace ScreenDrop
 
             if (m.Msg == WM_HOTKEY)
             {
-                // TODO Handle hotkey press
+                // Hide it
+                this.mainForm.SendToSystemTray();
+
+                // Ensure it's not visible
+                while (this.mainForm.Visible || this.mainForm.ShowInTaskbar)
+                {
+                    // Loop
+                    continue;
+                }
+
+                // Perform screenshot
+                this.mainForm.TakeScreenshot();
+
+                // Restore window 
+                this.mainForm.RestoreFromSystemTray();
             }
         }
 
@@ -233,6 +247,16 @@ namespace ScreenDrop
             {
                 // Let it fall through
             }
+        }
+
+        /// <summary>
+        /// Disposes the notify icon.
+        /// </summary>
+        internal void NotifyIconDispose()
+        {
+            this.notifyIcon.Visible = false;
+            this.notifyIcon.Icon.Dispose();
+            this.notifyIcon.Dispose();
         }
     }
 }

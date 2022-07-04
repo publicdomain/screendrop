@@ -8,6 +8,7 @@ namespace ScreenDrop
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Drawing.Imaging;
     using System.IO;
     using System.Reflection;
     using System.Windows.Forms;
@@ -36,6 +37,31 @@ namespace ScreenDrop
         private string settingsDataPath = $"{Application.ProductName}-SettingsData.txt";
 
         /// <summary>
+        /// The count.
+        /// </summary>
+        private int count = 0;
+
+        /// <summary>
+        /// The app directory.
+        /// </summary>
+        private string appDirectory = string.Empty;
+
+        /// <summary>
+        /// The screenshot path.
+        /// </summary>
+        private string screenshotPath = string.Empty;
+
+        /// <summary>
+        /// The default screenshot path.
+        /// </summary>
+        private string defaultScreenshotPath = string.Empty;
+
+        /// <summary>
+        /// The save directory.
+        /// </summary>
+        private string saveDirectory = string.Empty;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:ScreenDrop.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -43,6 +69,10 @@ namespace ScreenDrop
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
 
+            // Set directories
+            this.appDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            this.saveDirectory = Path.Combine(this.appDirectory, "Saved");
+            this.defaultScreenshotPath = Path.Combine(this.appDirectory, "screenshot.png");
 
             // Add keys
             foreach (var key in Enum.GetValues(typeof(Keys)))
@@ -88,16 +118,6 @@ namespace ScreenDrop
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnImagePictureBoxMouseMove(object sender, MouseEventArgs e)
-        {
-            // TODO Add code
-        }
-
-        /// <summary>
-        /// Handles the check box checked changed.
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
         {
             // TODO Add code
         }
@@ -227,11 +247,25 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            // Dispose the notify icon
+            ((HiddenForm)this.Owner).NotifyIconDispose();
+
             // Set settings from GUI
             this.GuiToSettingsData();
 
             // Save to disk
             this.SaveSettingsFile(this.settingsDataPath, this.settingsData);
+
+            try
+            {
+                // Remove default screenshot
+                File.Delete(this.defaultScreenshotPath);
+            }
+            catch (Exception ex)
+            {
+                // Advise user
+                MessageBox.Show($"Could not remove default screenshot file!{Environment.NewLine}{Environment.NewLine}Message:{Environment.NewLine}{ex.Message}", "Screenshot file", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         /// <summary>
@@ -309,6 +343,52 @@ namespace ScreenDrop
 
             // Restore in task bar
             this.ShowInTaskbar = true;
+        }
+
+        /// <summary>
+        /// Takes the screenshot.
+        /// </summary>
+        internal void TakeScreenshot()
+        {
+            try
+            {
+                // Screen to bitmap
+                Bitmap screenBitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+                Graphics g = Graphics.FromImage(screenBitmap);
+                g.CopyFromScreen(0, 0, 0, 0, screenBitmap.Size);
+
+                // Check if must save to disk
+                if (this.keepImagesToolStripMenuItem.Checked)
+                {
+                    // TODO Create directory [Can be improved]
+                    Directory.CreateDirectory(this.saveDirectory);
+
+                    // Set screenshot path by save directory and current DateTime 
+                    this.screenshotPath = Path.Combine(this.saveDirectory, string.Format("{0:yyyyMMddHHmmss}.png", DateTime.Now));
+                }
+                else
+                {
+                    // Set to default screenshot path
+                    this.screenshotPath = this.defaultScreenshotPath;
+                }
+
+                // Save to disk
+                screenBitmap.Save(this.screenshotPath, ImageFormat.Png);
+
+                // Set picturebox
+                this.imagePictureBox.Image = screenBitmap;
+
+                // Raise counter
+                this.count++;
+
+                // Update status
+                this.screenshotsCountToolStripStatusLabel.Text = this.count.ToString();
+            }
+            catch (Exception ex)
+            {
+                // Advise user
+                MessageBox.Show($"Could not take screenshot!{Environment.NewLine}{Environment.NewLine}Message:{Environment.NewLine}{ex.Message }", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
