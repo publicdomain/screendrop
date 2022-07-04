@@ -228,7 +228,11 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // TODO Add code
+            // Set settings from GUI
+            this.GuiToSettingsData();
+
+            // Save to disk
+            this.SaveSettingsFile(this.settingsDataPath, this.settingsData);
         }
 
         /// <summary>
