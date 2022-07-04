@@ -9,6 +9,7 @@ namespace ScreenDrop
     using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
+    using System.Reflection;
     using System.Windows.Forms;
     using System.Xml.Serialization;
     using PublicDomain;
@@ -41,6 +42,35 @@ namespace ScreenDrop
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+
+            // Add keys
+            foreach (var key in Enum.GetValues(typeof(Keys)))
+            {
+                // Add to list box
+                this.keyComboBox.Items.Add(key.ToString());
+            }
+
+            /* Set icons */
+
+            // Set associated icon from exe file
+            this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
+
+            // Set public domain is tool strip menu item image
+            this.freeReleasesPublicDomainisToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
+
+            /* Process settings */
+
+            // Check for settings file
+            if (!File.Exists(this.settingsDataPath))
+            {
+                // Create new settings file
+                this.SaveSettingsFile(this.settingsDataPath, new SettingsData());
+            }
+
+            // Load settings from disk
+            this.settingsData = this.LoadSettingsFile(this.settingsDataPath);
+
         }
 
         /// <summary>
@@ -50,7 +80,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnImagePictureBoxDoubleClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -60,7 +90,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnImagePictureBoxMouseMove(object sender, MouseEventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -70,7 +100,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnCheckBoxCheckedChanged(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -80,7 +110,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -90,7 +120,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnOptionsToolStripMenuItemDropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -100,7 +130,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnFreeReleasesPublicDomainisToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -110,7 +140,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnOriginalThreadRedditcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -120,7 +150,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnSourceCodeGithubcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -130,7 +160,7 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnAboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
 
         /// <summary>
@@ -178,13 +208,51 @@ namespace ScreenDrop
         }
 
         /// <summary>
+        /// Handles the main form load.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnMainFormLoad(object sender, EventArgs e)
+        {
+            // TODO Add code	
+        }
+
+        /// <summary>
+        /// Handles the main form form closing.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+            // TODO Add code
+        }
+
+        /// <summary>
+        /// GUIs to settings data.
+        /// </summary>
+        private void GuiToSettingsData()
+        {
+            // Options
+            this.settingsData.TopMost = this.alwaysOnTopToolStripMenuItem.Checked;
+            this.settingsData.KeepImages = this.keepImagesToolStripMenuItem.Checked;
+
+            // Modifier checkboxes
+            this.settingsData.Control = this.controlCheckBox.Checked;
+            this.settingsData.Alt = this.altCheckBox.Checked;
+            this.settingsData.Shift = this.shiftCheckBox.Checked;
+
+            // Hotkey
+            this.settingsData.Hotkey = this.keyComboBox.SelectedItem.ToString();
+        }
+
+        /// <summary>
         /// Handles the exit tool strip menu item click.
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnExitToolStripMenuItemClick(object sender, EventArgs e)
         {
-            //  TODO Add code
+            // TODO Add code
         }
     }
 }
