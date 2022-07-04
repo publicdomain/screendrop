@@ -284,6 +284,21 @@ namespace ScreenDrop
         }
 
         /// <summary>
+        /// Restores the window back from system tray to the foreground.
+        /// </summary>
+        internal void RestoreFromSystemTray()
+        {
+            // Make form visible again
+            this.Show();
+
+            // Return window back to normal
+            this.WindowState = FormWindowState.Normal;
+
+            // Restore in task bar
+            this.ShowInTaskbar = true;
+        }
+
+        /// <summary>
         /// Handles the hotkey updated event.
         /// </summary>
         /// <param name="sender">Sender object.</param>

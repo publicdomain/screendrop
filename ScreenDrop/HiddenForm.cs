@@ -170,46 +170,6 @@ namespace ScreenDrop
         }
 
         /// <summary>
-        /// TODO Pastes async. [May need some work on the visible + close logic]
-        /// </summary>
-        /// <param name="delay">Delay.</param>
-        /// <param name="closePopup">If set to <c>true</c> close popup.</param>
-        internal async void PasteAsync(int delay, bool closePopup)
-        {
-            // Flags
-            bool mainFormVisible = this.mainForm.Visible;
-            bool popupFormVisible = this.popupForm.Visible;
-
-            // Hide
-            if (mainFormVisible)
-            {
-                this.mainForm.Hide();
-            }
-
-            if (popupFormVisible)
-            {
-                this.popupForm.Hide();
-            }
-
-            // Delay
-            await Task.Delay(delay);
-
-            // Paste
-            SendKeys.Send("^v");
-
-            // Restore
-            if (mainFormVisible)
-            {
-                this.mainForm.Show();
-            }
-
-            if (!closePopup && popupFormVisible)
-            {
-                this.popupForm.Show();
-            }
-        }
-
-        /// <summary>
         /// Exits the thread.
         /// </summary>
         internal void ExitThread()
@@ -243,32 +203,7 @@ namespace ScreenDrop
 
             if (m.Msg == WM_HOTKEY)
             {
-                // Close previous
-                if (this.popupForm != null)
-                {
-                    this.popupForm.Close();
-                }
-
-                // Set popup form
-                this.popupForm = new PopupForm(this.mainForm.DataTable)
-                {
-                    // Set properties
-                    TopMost = true,
-                    Icon = this.mainForm.Icon
-                };
-
-                // Set popup location
-                if (this.mainForm.OpenPopupOnCursorLocation)
-                {
-                    this.popupForm.Location = Cursor.Position;
-                }
-                else
-                {
-                    this.popupForm.StartPosition = FormStartPosition.CenterScreen;
-                }
-
-                // Show popup
-                this.popupForm.Show(this);
+                // TODO Handle hotkey press
             }
         }
 
