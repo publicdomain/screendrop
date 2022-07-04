@@ -280,7 +280,8 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnMinimizeToolStripMenuItemClick(object sender, System.EventArgs e)
         {
-            // TODO Add code
+            // Minimize to tray
+            this.SendToSystemTray();
         }
 
         /// <summary>
@@ -323,6 +324,17 @@ namespace ScreenDrop
                 // Update the hotkey combination
                 ((HiddenForm)this.Owner).UpdateHotkey(this.controlCheckBox.Checked, this.altCheckBox.Checked, this.shiftCheckBox.Checked, this.keyComboBox.SelectedItem.ToString());
             }
+        }
+
+        /// <summary>
+        /// Handles the main form form closed.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnMainFormFormClosed(object sender, FormClosedEventArgs e)
+        {
+            // Exit the application
+            ((HiddenForm)this.Owner).ExitThread();
         }
 
         /// <summary>
