@@ -284,6 +284,18 @@ namespace ScreenDrop
         }
 
         /// <summary>
+        /// Sends the program to the system tray.
+        /// </summary>
+        internal void SendToSystemTray()
+        {
+            // Hide main form
+            this.Hide();
+
+            // Remove from task bar
+            this.ShowInTaskbar = false;
+        }
+
+        /// <summary>
         /// Restores the window back from system tray to the foreground.
         /// </summary>
         internal void RestoreFromSystemTray()
