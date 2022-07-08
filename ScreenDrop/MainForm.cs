@@ -202,7 +202,8 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnOriginalThreadRedditcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open original thread
+            Process.Start("https://www.reddit.com/r/software/comments/vbcu4x/is_there_any_screenshot_solution_that_does_drag/");
         }
 
         /// <summary>
