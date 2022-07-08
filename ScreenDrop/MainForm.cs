@@ -7,6 +7,7 @@ namespace ScreenDrop
     // Directives
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;
@@ -139,7 +140,19 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnOptionsToolStripMenuItemDropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // TODO Add code
+            // Set tool strip menu item
+            ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)e.ClickedItem;
+
+            // Toggle checked
+            toolStripMenuItem.Checked = !toolStripMenuItem.Checked;
+
+            // Set topmost by check box
+            this.TopMost = this.alwaysOnTopToolStripMenuItem.Checked;
+
+            /* Settings data */
+
+            // ALways on top
+            this.settingsData.TopMost = this.alwaysOnTopToolStripMenuItem.Checked;
         }
 
         /// <summary>
@@ -364,7 +377,7 @@ namespace ScreenDrop
                     Directory.CreateDirectory(this.saveDirectory);
 
                     // Set screenshot path by save directory and current DateTime 
-                    this.screenshotPath = Path.Combine(this.saveDirectory, string.Format("{0:yyyyMMddHHmmss}.png", DateTime.Now));
+                    this.screenshotPath = Path.Combine(this.saveDirectory, string.Format("{0:yyyy-MM-dd_HH-mm-ss}.png", DateTime.Now));
                 }
                 else
                 {
