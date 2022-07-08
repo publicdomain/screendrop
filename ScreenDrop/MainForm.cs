@@ -141,7 +141,25 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Remove if default
+            if(this.screenshotPath == this.defaultScreenshotPath && File.Exists(this.defaultScreenshotPath))
+            {
+                // Remove from disk
+                File.Delete(this.defaultScreenshotPath);
+            }
+
+            // Reset path
+            this.screenshotPath = string.Empty;
+
+            // Clear picturebox
+            this.imagePictureBox.Image = null;
+            this.imagePictureBox.Refresh();
+
+            // Reset count
+            this.count = 0;
+
+            // Update status
+            this.screenshotsCountToolStripStatusLabel.Text = this.count.ToString();
         }
 
         /// <summary>
