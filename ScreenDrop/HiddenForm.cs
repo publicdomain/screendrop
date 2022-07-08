@@ -137,7 +137,7 @@ namespace ScreenDrop
             // Set the notify icon
             this.notifyIcon = new System.Windows.Forms.NotifyIcon
             {
-                Text = "Click to show ClipHoard",
+                Text = "Click to show",
                 Icon = this.mainForm.Icon,
                 ContextMenuStrip = this.notifyIconContextMenuStrip,
                 Visible = true
