@@ -110,8 +110,13 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnImagePictureBoxDoubleClick(object sender, EventArgs e)
         {
-            // TODO Add code
-        }
+            // Check for image file
+            if (this.screenshotPath.Length > 0 && File.Exists(this.screenshotPath))
+            {
+                // Open image
+                Process.Start(this.screenshotPath);
+            }
+        }   
 
         /// <summary>
         /// Handles the image picture box mouse move.
@@ -120,7 +125,13 @@ namespace ScreenDrop
         /// <param name="e">Event arguments.</param>
         private void OnImagePictureBoxMouseMove(object sender, MouseEventArgs e)
         {
-            // TODO Add code
+            // TODO Drag [Can be improved: File.Exist check]
+            if (e.Button == MouseButtons.Left && this.screenshotPath.Length > 0)
+            {
+                var files = new string[] { this.screenshotPath };
+
+                this.imagePictureBox.DoDragDrop(new DataObject(DataFormats.FileDrop, files), DragDropEffects.Copy | DragDropEffects.Move);
+            }
         }
 
         /// <summary>
