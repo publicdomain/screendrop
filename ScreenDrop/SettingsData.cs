@@ -36,6 +36,12 @@ namespace PublicDomain
         public bool KeepImages { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="T:PublicDomain.SettingsData"/> start at logon.
+        /// </summary>
+        /// <value><c>true</c> if start at logon; otherwise, <c>false</c>.</value>
+        public bool StartAtLogon { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets a value indicating whether this <see cref="T:PublicDomainWeekly.SettingsData"/> is control.
         /// </summary>
         /// <value><c>true</c> if control; otherwise, <c>false</c>.</value>
