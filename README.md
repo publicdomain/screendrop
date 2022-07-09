@@ -19,9 +19,9 @@ v0.1.0:
 - Drag and drop as file.
 - Configurable hotkeys.
 - Option to save screenshots to subfolder.
-- Auto-delete default screenshot path on exit.
+- Auto-delete default screenshot on exit.
 - Adjustable-size preview image.
-- Image opens on double click.
+- Open image on double click.
 - Start at logon.
 - Saves settings data.
 - Screenshots counter.
